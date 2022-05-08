@@ -17,3 +17,31 @@ module.exports.createUser = (req, res) => {
   User.create({name, about, avatar})
     .then((user) => res.status(200).send(user))
 }
+
+module.exports.patchUserInfo = (req, res) => {
+  const { name, about, _id = req.user._id } = req.body;
+
+  User.findByIdAndUpdate(
+    _id,
+    { name, about },
+    {
+      new: true,
+      runValidators: true,
+      upsert: false
+    })
+    .then((user) => res.status(200).send(user))
+}
+
+module.exports.patchAvatar = (req, res) => {
+  const { avatar, _id = req.user._id } = req.body;
+
+  User.findByIdAndUpdate(
+    _id,
+    { avatar },
+    {
+      new: true,
+      runValidators: true,
+      upsert: false
+    })
+    .then((user) => res.status(200).send(user))
+}
