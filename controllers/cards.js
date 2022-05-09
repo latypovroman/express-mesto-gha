@@ -10,7 +10,7 @@ module.exports.deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.cardId)
     .then((card) => {
       if (!card) {
-        res.status(404).send({message: 'Карточка с указанным _id не найдена.', err});
+        res.status(404).send({message: 'Карточка с указанным _id не найдена.' });
       } else {
         res.status(200).send(card)
       }
@@ -47,7 +47,7 @@ module.exports.putLike = (req, res) => {
   )
     .then((card) => {
       if (!card) {
-        res.status(404).send({message: 'Карточка с указанным _id не найдена.', err});
+        res.status(404).send({message: 'Карточка с указанным _id не найдена.' });
       } else {
         res.status(200).send(card)
       }
@@ -69,7 +69,7 @@ module.exports.deleteLike = (req, res) => {
   )
   .then((card) => {
     if (!card) {
-      res.status(404).send({message: 'Карточка с указанным _id не найдена.', err});
+      res.status(404).send({message: 'Карточка с указанным _id не найдена.' });
     } else {
       res.status(200).send(card)
     }
