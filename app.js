@@ -14,7 +14,10 @@ app.use((req, res, next) => {
 });
 
 app.use('/users', userRoutes);
-app.use('/cards', cardRoutes)
+app.use('/cards', cardRoutes);
+app.use((req, res) => {
+  res.status(404).send({message: 'Неверный адрес.' });
+})
 
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/mestodb', {
