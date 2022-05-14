@@ -26,9 +26,7 @@ async function main() {
     useNewUrlParser: true,
     useUnifiedTopology: false,
   });
-  app.listen(PORT, () => {
-    console.log(`Работаем на ${PORT}`);
-  });
+  app.listen(PORT, () => {});
 }
 
 main();
