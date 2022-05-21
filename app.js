@@ -2,8 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const { PORT = 3000 } = process.env;
+const auth = require('./middlewares/auth');
 const userRoutes = require('./routes/userRoutes');
 const cardRoutes = require('./routes/cardRoutes');
+const { login, createUser } = require('./controllers/users');
 
 const app = express();
 
@@ -15,9 +17,11 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
-app.use('/users', userRoutes);
-app.use('/cards', cardRoutes);
-app.use((req, res) => {
+app.post('/signin', login);
+app.post('/signup', createUser);
+app.use('/users', auth, userRoutes);
+app.use('/cards', auth, cardRoutes);
+app.use(auth, (req, res) => {
   res.status(404).send({ message: 'Неверный адрес.' });
 });
 
