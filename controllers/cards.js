@@ -11,9 +11,11 @@ module.exports.deleteCard = (req, res) => {
     .then((card) => {
       if (!card) {
         res.status(404).send({ message: 'Карточка с указанным _id не найдена.' });
-      } else {
-        res.status(200).send(card);
       }
+      if (req.user._id !== card.owner) {
+        res.status(404).send({ message: 'Вы можете удалять только созданые вами карточки' });
+      }
+      res.status(200).send(card);
     })
     .catch((err) => {
       if (err.name === 'CastError') {

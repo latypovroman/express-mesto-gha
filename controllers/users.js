@@ -111,3 +111,15 @@ module.exports.login = (req, res) => {
     })
     .catch((err) => res.status(401).send({ message: err.message }));
 };
+
+module.exports.getUserInfo = (req, res) => {
+  User.findById(req.user._id)
+    .then((user) => res.status(200).send(user))
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Неправильный _id.' });
+        return;
+      }
+      res.status(500).send({ message: 'Неизвестная ошибка' });
+    });
+}
