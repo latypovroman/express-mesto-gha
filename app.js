@@ -6,6 +6,7 @@ const auth = require('./middlewares/auth');
 const userRoutes = require('./routes/userRoutes');
 const cardRoutes = require('./routes/cardRoutes');
 const { login, createUser } = require('./controllers/users');
+const { createError } = require('./errors/createError');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use('/cards', auth, cardRoutes);
 app.use(auth, (req, res) => {
   res.status(404).send({ message: 'Неверный адрес.' });
 });
+app.use(createError);
 
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/mestodb', {

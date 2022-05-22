@@ -118,8 +118,9 @@ module.exports.getUserInfo = (req, res) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         res.status(400).send({ message: 'Неправильный _id.' });
+
         return;
       }
       res.status(500).send({ message: 'Неизвестная ошибка' });
     });
-}
+};

@@ -4,8 +4,8 @@ const {
 } = require('../controllers/users');
 
 userRoutes.get('/', getUsers);
-userRoutes.get('/:userId', getUserById);
 userRoutes.get('/me', getUserInfo);
+userRoutes.get('/:userId', getUserById);
 userRoutes.patch('/me', patchUserInfo);
 userRoutes.patch('/me/avatar', patchAvatar);
 
