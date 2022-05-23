@@ -8,6 +8,8 @@ const userRoutes = require('./routes/userRoutes');
 const cardRoutes = require('./routes/cardRoutes');
 const { login, createUser } = require('./controllers/users');
 const { createError } = require('./errors/createError');
+const { urlValidate } = require('./utils/urlValidate');
+const BadRequestError = require('./errors/BadRequestError');
 
 const app = express();
 
@@ -19,7 +21,7 @@ app.post('/signup', celebrate({
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().min(2),
+    avatar: Joi.string().min(2).custom(urlValidate),
   }),
 }), createUser);
 
@@ -33,8 +35,8 @@ app.post('/signin', celebrate({
 app.use('/users', auth, userRoutes);
 app.use('/cards', auth, cardRoutes);
 
-app.use(auth, (req, res) => {
-  res.status(404).send({ message: 'Неверный адрес.' });
+app.use(auth, () => {
+  throw new BadRequestError('Неверный адрес');
 });
 
 app.use(errors());
