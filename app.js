@@ -10,9 +10,11 @@ const { login, createUser } = require('./controllers/users');
 const { createError } = require('./errors/createError');
 const { urlValidate } = require('./utils/urlValidate');
 const BadRequestError = require('./errors/BadRequestError');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
+app.use(requestLogger);
 app.use(express.json());
 
 app.post('/signup', celebrate({
@@ -39,6 +41,7 @@ app.use(auth, () => {
   throw new BadRequestError('Неверный адрес');
 });
 
+app.use(errorLogger);
 app.use(errors());
 app.use(createError);
 
