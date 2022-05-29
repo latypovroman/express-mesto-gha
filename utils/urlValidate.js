@@ -1,7 +1,7 @@
 const { isURL } = require('validator');
 const BadRequestError = require('../errors/BadRequestError');
 
-module.exports.method = (value) => {
+module.exports.urlValidate = (value) => {
   const result = isURL(value);
   if (result) {
     return value;
